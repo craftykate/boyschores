@@ -2,8 +2,14 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import secrets from '../../utils/secrets';
 
+import NewChoreDetails from './NewChoreDetails/NewChoreDetails';
+
 class NewChore extends Component {
   state = { ...this.resetState() }
+
+  componentDidUpdate() {
+    this.checkReady();
+  }
 
   resetState() {
     return {
@@ -11,12 +17,29 @@ class NewChore extends Component {
       choreName: '',
       notes: '',
       points: 1,
-      persistent: false
+      persistent: false,
+      ready: false
     }
   }
 
   showDetails = () => {
     this.setState({ showDetails: true });
+  }
+
+  updateChoreNameHandler = (event) => {
+    this.setState({ choreName: event.target.value })
+  }
+
+  checkReady = () => {
+    if (this.state.choreName) {
+      if (this.state.ready === false) {
+        this.setState({ ready: true })
+      } 
+    } else {
+      if (this.state.ready === true) {
+        this.setState({ ready: false })
+      }
+    }
   }
 
   pointsChangeHandler = (event) => {
@@ -25,6 +48,10 @@ class NewChore extends Component {
 
   notesChangeHandler = (event) => {
     this.setState({ notes: event.target.value })
+  }
+
+  persistentHandler = (boolean) => {
+    this.setState({ persistent: boolean })
   }
 
   postChoreHandler = () => {
@@ -44,43 +71,20 @@ class NewChore extends Component {
   }
 
   render() {
-    let details = null;
-    if (this.state.showDetails) {
-      details = (
-        <React.Fragment>
-          <textarea value={this.state.notes} onChange={this.notesChangeHandler} />
-          <select value={this.state.points} onChange={this.pointsChangeHandler}>
-            <option value='0.25'>1/4</option>
-            <option value="0.5">1/2</option>
-            <option value="0.75">3/4</option>
-            <option value="1">1</option>
-            <option value='1.25'>1 1/4</option>
-            <option value="1.5">1 1/2</option>
-            <option value="1.75">1 3/4</option>
-            <option value="2">2</option>
-          </select>
-          <input 
-            type="radio" 
-            name="persistent" 
-            defaultChecked
-            onChange={() => this.setState({ persistent: false })}/> Single Chore
-          <input 
-            type="radio" 
-            name="persistent" 
-            onChange={() => this.setState({ persistent: true })}/> Multiple allowed
-        </React.Fragment>
-      )
-    }
-
     return (
-      <div className="addChore">
-        <input 
-          value={this.state.choreName} 
-          onChange={(event) => this.setState({ choreName: event.target.value })} 
-          onClick={this.showDetails}/>
-          {details}
-        <button onClick={this.postChoreHandler}>Add Chore</button>
-      </div>
+      <NewChoreDetails 
+        choreName={this.state.choreName} 
+        showDetails={this.showDetails}
+        show={this.state.showDetails}
+        updateChoreName={this.updateChoreNameHandler} 
+        notes={this.state.notes}
+        notesChange={this.notesChangeHandler}
+        points={this.state.points}
+        pointsChange={this.pointsChangeHandler}
+        persistent={this.persistentHandler}
+        postChore={this.postChoreHandler} 
+        cancel={() => this.setState({ ...this.resetState() })} 
+        ready={this.state.ready} />
     )
   }
 };

@@ -1,7 +1,7 @@
 import React from 'react';
 
 const CompletedChores = (props) => {
-  let jackChores = <tr><td>No completed chores</td></tr>;
+  let jackChores = <tr><td colSpan="2">No completed chores</td></tr>;
   if (props.jack) {
     jackChores = Object.keys(props.jack).map(key => {
       const chore = props.jack[key];
@@ -13,7 +13,7 @@ const CompletedChores = (props) => {
       )
     })
   }
-  let nobyChores = <tr><td>No completed chores</td></tr>;
+  let nobyChores = <tr><td colSpan="2">No completed chores</td></tr>;
   if (props.noby) {
     nobyChores = Object.keys(props.noby).map(key => {
       const chore = props.noby[key];
@@ -31,6 +31,7 @@ const CompletedChores = (props) => {
         <thead>
           <tr>
             <th>Jack's chores</th>
+            <th>Points</th>
           </tr>
         </thead>
         <tbody>
@@ -41,6 +42,7 @@ const CompletedChores = (props) => {
         <thead>
           <tr>
             <th>Noby's chores</th>
+            <th>Points</th>
           </tr>
         </thead>
         <tbody>

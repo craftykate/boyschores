@@ -1,0 +1,34 @@
+@import '../../styles/_colors.scss';
+
+table {
+  td {
+    &.narrow {
+      a {
+        color: white;
+        display: inline-block;
+        width: 1.5em;
+        padding: 3px 0;
+        border-radius: 50%;
+        &.jack {
+          margin-right: 5px;
+          background-color: green;
+          &:hover {
+            background-color: darken(green, 10%);
+          }
+        }
+        &.noby {
+          background-color: orangered;
+          &:hover {
+            background-color: darken(orangered, 20%);
+          }
+        }
+        &:hover {
+          text-decoration: none;
+        }
+      }
+    }
+    &.points {
+      text-align: left;
+    }
+  }
+}

@@ -62,14 +62,22 @@ class Chores extends Component {
   }
 
   completeChoreHandler = (kid, key) => {
-    // const data = {
-    //   completed: kid
-    // }
-    // axios.patch(`${secrets.baseURL}/chores/${key}.json`, data)
-    //   .then(response => {
-    //     console.log(response.data)
-    //   });
-    
+    const allChores = {...this.state.chores}
+    const completedChore = {...this.state.chores[key]}
+    const jackChores = {...this.state.jackChores};
+    const nobyChores = {...this.state.nobyChores};
+    if (this.state.chores[key].persistent === false) delete allChores[key] ;
+    if (kid === 'jack') {
+      this.setState({
+        chores: allChores,
+        jackChores: {...jackChores, completedChore}
+      })
+    } else if (kid === 'noby') {
+      this.setState({
+        chores: allChores,
+        nobyChores: {...nobyChores, completedChore}
+      })
+    }
   }
 
   render() {

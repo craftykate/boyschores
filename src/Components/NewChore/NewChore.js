@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-// import axios from 'axios';
-// import secrets from '../../utils/secrets';
+import axios from 'axios';
+import secrets from '../../utils/secrets';
 
 class NewChore extends Component {
   state = { ...this.resetState() }
@@ -35,13 +35,12 @@ class NewChore extends Component {
       persistent: this.state.persistent
     };
 
-    // axios.post(`${secrets.baseURL}/chores.json`, chore)
-    //   .then(response => {
-    //     console.log(response.data)
-    //   });
-      
+    axios.post(`${secrets.baseURL}/chores.json`, chore)
+      .then(response => {
+        console.log('posted a chore')
+        this.props.addChore();
+      });
     this.setState({ ...this.resetState() });
-    this.props.addChore(chore);
   }
 
   render() {

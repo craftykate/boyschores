@@ -3,6 +3,7 @@ import './Chores.css';
 import axios from 'axios';
 import secrets from '../../utils/secrets';
 
+import ChoreList from './ChoreList/ChoreList';
 import NewChore from '../NewChore/NewChore';
 import CompletedChores from '../CompletedChores/CompletedChores';
 
@@ -102,67 +103,25 @@ class Chores extends Component {
             });
         })
     }
-
-    if (kid === 'jack') {
-      axios.post(`${secrets.baseURL}/jackChores.json`, completedChore)
-        .then(response => {
-          console.log('adding a jack chore');
-          axios.get(`${secrets.baseURL}/jackChores.json`)
-            .then(response => {
-              console.log('fetched jack chores');
-              this.setState({ jackChores: response.data });
-            })
-        });
-    } else if (kid === 'noby') {
-      axios.post(`${secrets.baseURL}/nobyChores.json`, completedChore)
-        .then(response => {
-          console.log('adding a noby chore');
-          axios.get(`${secrets.baseURL}/nobyChores.json`)
-            .then(response => {
-              console.log('fetched noby chores');
-              this.setState({ nobyChores: response.data });
-            })
-        });
-    }
+    axios.post(`${secrets.baseURL}/${kid}Chores.json`, completedChore)
+      .then(response => {
+        console.log(`adding a ${kid} chore`);
+        axios.get(`${secrets.baseURL}/${kid}Chores.json`)
+          .then(response => {
+            console.log(`fetched ${kid} chores`);
+            if (kid === 'jack') this.setState({ jackChores: response.data });
+            if (kid === 'noby') this.setState({ nobyChores: response.data });
+          })
+      });
   }
 
   render() {
-    let chores;
-    if (this.state.chores === false) {
-      chores = <tr><td>loading chores...</td></tr>;
-    } else if (this.state.chores === null) {
-      chores = <tr><td>No chores yet!</td></tr>;
-    }
-    if (this.state.chores) {
-      chores = Object.keys(this.state.chores).map(key => {
-        const chore = this.state.chores[key];
-        return ( 
-          <tr key={key}>
-            <td>{chore.name}</td>
-            <td className="narrow points">{chore.points}</td>
-            <td className="narrow">
-              <a onClick={() => this.completeChoreHandler('jack', key)} className="jack" >J</a>
-              <a onClick={() => this.completeChoreHandler('noby', key)} className="noby" >N</a>
-            </td>
-          </tr>
-        )
-      })
-    }
     return (
       <React.Fragment>
         <NewChore addChore={this.addChoreHandler} />
-        <table>
-          <thead>
-            <tr>
-              <th>Available Chores:</th>
-              <th>Points</th>
-              <th><span role="img" aria-label="Done">✅</span></th>
-            </tr>
-          </thead>
-          <tbody>
-            {chores}
-          </tbody>
-        </table>
+        <ChoreList 
+          chores={this.state.chores}
+          completeChore={this.completeChoreHandler} />
         <CompletedChores jack={this.state.jackChores} noby={this.state.nobyChores} />
       </React.Fragment>
     )

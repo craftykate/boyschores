@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import './App.css';
 
 import Layout from '../Layout/Layout';
-import NewChore from '../NewChore/NewChore';
+import Chores from '../Chores/Chores';
 
 class App extends Component {
   render() {
     return (
       <Layout>
-        <NewChore />
+        <Chores />
       </Layout>
     );
   }

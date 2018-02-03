@@ -1,18 +1,17 @@
 import React, { Component } from 'react';
-import axios from 'axios';
-import secrets from '../../utils/secrets';
-
-
+// import axios from 'axios';
+// import secrets from '../../utils/secrets';
 
 class NewChore extends Component {
   state = { ...this.resetState() }
 
   resetState() {
     return {
-      choreName: '',
       showDetails: false,
+      choreName: '',
       notes: '',
-      points: 1
+      points: 1,
+      persistent: false
     }
   }
 
@@ -32,15 +31,17 @@ class NewChore extends Component {
     const chore = { 
       name: this.state.choreName,
       notes: this.state.notes,
-      points: Number(this.state.points)
+      points: Number(this.state.points),
+      persistent: this.state.persistent
     };
 
-    axios.post(`${secrets.baseURL}/chores.json`, chore)
-      .then(response => {
-        console.log(response.data)
-      });
+    // axios.post(`${secrets.baseURL}/chores.json`, chore)
+    //   .then(response => {
+    //     console.log(response.data)
+    //   });
       
     this.setState({ ...this.resetState() });
+    this.props.addChore(chore);
   }
 
   render() {
@@ -59,6 +60,15 @@ class NewChore extends Component {
             <option value="1.75">1 3/4</option>
             <option value="2">2</option>
           </select>
+          <input 
+            type="radio" 
+            name="persistent" 
+            defaultChecked
+            onChange={() => this.setState({ persistent: false })}/> Single Chore
+          <input 
+            type="radio" 
+            name="persistent" 
+            onChange={() => this.setState({ persistent: true })}/> Multiple allowed
         </React.Fragment>
       )
     }

@@ -26,7 +26,16 @@
 					border-top-left-radius: 5px;
 					border-left: 1px solid $main;
 					text-align: left;
-					width: 80%;					
+					width: 80%;
+				}
+				&.choreList {
+					width: 80%;			
+					@media (max-width: 655px) {
+						width: 70%;
+					}					
+					@media (max-width: 435px) {
+						width: 50%;
+					}	
 				}
 				.narrow {
 					width: 10%;

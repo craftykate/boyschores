@@ -27,7 +27,7 @@ const ChoreList = (props) => {
     <table>
       <thead>
         <tr>
-          <th>Available Chores:</th>
+          <th className="choreList">Available Chores:</th>
           <th>Points</th>
           <th><span role="img" aria-label="Done">✅</span></th>
         </tr>

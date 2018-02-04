@@ -63,23 +63,23 @@ class Chores extends Component {
 
   componentDidMount() {
     // For styling purposes so you can avoid hitting the database after every change
-    // this.setUpDummyData();
+    this.setUpDummyData();
 
-    axios.get(`${secrets.baseURL}/chores.json`)
-      .then(response => {
-        console.log('fetched chores on mounting');
-        this.setState({ chores: response.data });
-      })
-    axios.get(`${secrets.baseURL}/jackChores.json`)
-      .then(response => {
-        console.log('fetched jack chores on mounting');
-        this.setState({ jackChores: response.data });
-      });
-    axios.get(`${secrets.baseURL}/nobyChores.json`)
-      .then(response => {
-        console.log('fetched noby chores on mounting');
-        this.setState({ nobyChores: response.data });
-      })
+    // axios.get(`${secrets.baseURL}/chores.json`)
+    //   .then(response => {
+    //     console.log('fetched chores on mounting');
+    //     this.setState({ chores: response.data });
+    //   })
+    // axios.get(`${secrets.baseURL}/jackChores.json`)
+    //   .then(response => {
+    //     console.log('fetched jack chores on mounting');
+    //     this.setState({ jackChores: response.data });
+    //   });
+    // axios.get(`${secrets.baseURL}/nobyChores.json`)
+    //   .then(response => {
+    //     console.log('fetched noby chores on mounting');
+    //     this.setState({ nobyChores: response.data });
+    //   })
   }
 
   addChoreHandler = () => {

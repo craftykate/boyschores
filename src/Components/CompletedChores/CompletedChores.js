@@ -1,10 +1,12 @@
 import React from 'react';
 
 const CompletedChores = (props) => {
+  // Default text for no completed chores
   const noCompleted = <tr><td colSpan="2" style={{fontWeight: "normal"}}>No completed chores</td></tr>;
   let jackPoints = 0;
   let nobyPoints = 0;
 
+  // Cycle through Jack's completed chores
   let jackChores = noCompleted;
   if (props.jack) {
     jackChores = Object.keys(props.jack).map(key => {
@@ -19,7 +21,8 @@ const CompletedChores = (props) => {
     })
   }
   
-  let nobyChores = noCompleted;
+  // Cycle through Noby's completed chores
+  let nobyChores = noCompleted;  
   if (props.noby) {
     nobyChores = Object.keys(props.noby).map(key => {
       const chore = props.noby[key];
@@ -32,6 +35,7 @@ const CompletedChores = (props) => {
       )
     })
   }
+
   return (
     <React.Fragment>
       <table>
@@ -49,6 +53,7 @@ const CompletedChores = (props) => {
           </tr>
         </tbody>
       </table>
+      
       <table>
         <thead>
           <tr>

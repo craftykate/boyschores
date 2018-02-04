@@ -2,11 +2,16 @@ import React from 'react';
 
 const ChoreList = (props) => {
   let chores;
+
+  // If chores is false it hasn't searched for chores on the db yet, so display loading
+  // If it's null, it has searched and there aren't chores so display no chores yet
   if (props.chores === false) {
     chores = <tr><td>loading chores...</td></tr>;
   } else if (props.chores === null) {
     chores = <tr><td>No chores yet!</td></tr>;
   }
+
+  // If chores have been sent, cycle through them and display a table row for each one
   if (props.chores) {
     chores = Object.keys(props.chores).map(key => {
       const chore = props.chores[key];
@@ -23,6 +28,7 @@ const ChoreList = (props) => {
       )
     })
   }
+  
   return (
     <table>
       <thead>

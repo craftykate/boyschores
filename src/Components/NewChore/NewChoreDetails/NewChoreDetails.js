@@ -2,6 +2,7 @@ import React from 'react';
 import './NewChoreDetails.css';
 
 const NewChoreDetails = (props) => {
+  // If user clicks inside "add chore" input field, show the rest of the necessary input fields to add a new chore
   let details = null;
   if (props.show) {
     details = (
@@ -44,6 +45,7 @@ const NewChoreDetails = (props) => {
       </React.Fragment>
     )
   }
+
   return (
     <div className="addChore">
       <input

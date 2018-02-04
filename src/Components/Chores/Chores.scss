@@ -2,6 +2,11 @@
 
 table {
   td {
+    span {
+      font-weight: normal;
+      font-style: italic;
+      font-size: 70%;
+    }
     &.narrow {
       a {
         color: white;
@@ -29,6 +34,14 @@ table {
     }
     &.points {
       text-align: left;
+    }
+  }
+  .totalRow {
+    td {
+      &:first-child {
+        font-weight: normal;
+        text-align: right;
+      }
     }
   }
 }

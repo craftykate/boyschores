@@ -63,23 +63,23 @@ class Chores extends Component {
 
   componentDidMount() {
     // For styling purposes so you can avoid hitting the database after every change
-    this.setUpDummyData();
+    // this.setUpDummyData();
 
-    // axios.get(`${secrets.baseURL}/chores.json`)
-    //   .then(response => {
-    //     console.log('fetched chores on mounting');
-    //     this.setState({ chores: response.data });
-    //   })
-    // axios.get(`${secrets.baseURL}/jackChores.json`)
-    //   .then(response => {
-    //     console.log('fetched jack chores on mounting');
-    //     this.setState({ jackChores: response.data });
-    //   });
-    // axios.get(`${secrets.baseURL}/nobyChores.json`)
-    //   .then(response => {
-    //     console.log('fetched noby chores on mounting');
-    //     this.setState({ nobyChores: response.data });
-    //   })
+    axios.get(`${secrets.baseURL}/chores.json`)
+      .then(response => {
+        console.log('fetched chores on mounting');
+        this.setState({ chores: response.data });
+      })
+    axios.get(`${secrets.baseURL}/jackChores.json`)
+      .then(response => {
+        console.log('fetched jack chores on mounting');
+        this.setState({ jackChores: response.data });
+      });
+    axios.get(`${secrets.baseURL}/nobyChores.json`)
+      .then(response => {
+        console.log('fetched noby chores on mounting');
+        this.setState({ nobyChores: response.data });
+      })
   }
 
   addChoreHandler = () => {
@@ -115,6 +115,30 @@ class Chores extends Component {
       });
   }
 
+  putChoreBack = (kid, key, chore) => {
+    axios.delete(`${secrets.baseURL}/${kid}Chores/${key}.json`)
+      .then(response => {
+        console.log('deleted chore');
+        axios.get(`${secrets.baseURL}/${kid}Chores.json`)
+          .then(response => {
+            console.log(`fetched ${kid} chores after deleting`);
+            if (kid === 'jack') this.setState({ jackChores: response.data });
+            if (kid === 'noby') this.setState({ nobyChores: response.data });
+          });
+      });
+    if (!chore.persistent) {
+      axios.post(`${secrets.baseURL}/chores.json`, chore)
+        .then(response => {
+          console.log('added back chore');
+          axios.get(`${secrets.baseURL}/chores.json`)
+            .then(response => {
+              console.log('fetched chores after putting one back');
+              this.setState({ chores: response.data });
+            })
+        })
+    }
+  }
+
   render() {
     return (
       <React.Fragment>
@@ -122,7 +146,10 @@ class Chores extends Component {
         <ChoreList 
           chores={this.state.chores}
           completeChore={this.completeChoreHandler} />
-        <CompletedChores jack={this.state.jackChores} noby={this.state.nobyChores} />
+        <CompletedChores 
+          jack={this.state.jackChores} 
+          noby={this.state.nobyChores}
+          putBack={this.putChoreBack}/>
       </React.Fragment>
     )
   }

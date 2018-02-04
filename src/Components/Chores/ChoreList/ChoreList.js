@@ -10,9 +10,10 @@ const ChoreList = (props) => {
   if (props.chores) {
     chores = Object.keys(props.chores).map(key => {
       const chore = props.chores[key];
+      let mult = chore.persistent ? <span>(multiple)</span> : null;
       return (
         <tr key={key}>
-          <td>{chore.name}</td>
+          <td>{chore.name} {mult}</td>
           <td className="narrow points">{chore.points}</td>
           <td className="narrow">
             <a onClick={() => props.completeChore('jack', key)} className="jack" >J</a>

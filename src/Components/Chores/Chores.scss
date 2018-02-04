@@ -1,12 +1,11 @@
 @import '../../styles/_colors.scss';
 
 table {
+  span {
+    font-weight: normal;
+    font-size: 70%;
+  }
   td {
-    span {
-      font-weight: normal;
-      font-style: italic;
-      font-size: 70%;
-    }
     &.narrow {
       a {
         color: white;

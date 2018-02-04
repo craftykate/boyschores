@@ -100,15 +100,7 @@ class Chores extends Component {
 
     // If it's a single-time chore delete it from the chore database then fetch an updated list of chores
     if (this.state.chores[key].persistent === false) {
-      axios.delete(`${secrets.baseURL}/chores/${key}.json`)
-        .then(response => {
-          // console.log('deleted chore');
-          axios.get(`${secrets.baseURL}/chores.json`)
-            .then(response => {
-              // console.log('fetched chores after deleting');
-              this.setState({ chores: response.data });
-            });
-        })
+      this.deleteChore(key);
     }
 
     // Add that chore to the proper kid's completed chore list and fetch the updated list of their chores
@@ -122,6 +114,19 @@ class Chores extends Component {
             if (kid === 'jack') this.setState({ jackChores: response.data });
             if (kid === 'noby') this.setState({ nobyChores: response.data });
           })
+      });
+  }
+
+  // delete given chore and fetch updated list of chores
+  deleteChore = (key) => {
+    axios.delete(`${secrets.baseURL}/chores/${key}.json`)
+      .then(response => {
+        // console.log('deleted chore');
+        axios.get(`${secrets.baseURL}/chores.json`)
+          .then(response => {
+            // console.log('fetched chores after deleting');
+            this.setState({ chores: response.data });
+          });
       });
   }
 
@@ -154,17 +159,32 @@ class Chores extends Component {
     }
   }
 
+  clearCompleted = (kid) => {
+    axios.delete(`${secrets.baseURL}/${kid}Chores.json`)
+      .then(response => {
+        // console.log('deleted chore');
+        axios.get(`${secrets.baseURL}/${kid}Chores.json`)
+          .then(response => {
+            // console.log(`fetched ${kid} chores after deleting`);
+            if (kid === 'jack') this.setState({ jackChores: response.data });
+            if (kid === 'noby') this.setState({ nobyChores: response.data });
+          });
+      });
+  }
+
   render() {
     return (
       <React.Fragment>
         <NewChore addChore={this.addChoreHandler} />
         <ChoreList 
           chores={this.state.chores}
-          completeChore={this.completeChoreHandler} />
+          completeChore={this.completeChoreHandler} 
+          deleteChore={this.deleteChore} />
         <CompletedChores 
           jack={this.state.jackChores} 
           noby={this.state.nobyChores}
-          putBack={this.putChoreBack}/>
+          putBack={this.putChoreBack}
+          clearCompleted={this.clearCompleted}/>
       </React.Fragment>
     )
   }

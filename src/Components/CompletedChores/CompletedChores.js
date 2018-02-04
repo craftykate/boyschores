@@ -41,7 +41,7 @@ const CompletedChores = (props) => {
       <table>
         <thead>
           <tr>
-            <th>Jack's chores</th>
+            <th>Jack's chores <span><a onClick={() => props.clearCompleted('jack')}>(clear all)</a></span></th>
             <th>Points</th>
           </tr>
         </thead>
@@ -57,7 +57,7 @@ const CompletedChores = (props) => {
       <table>
         <thead>
           <tr>
-            <th>Noby's chores</th>
+            <th>Noby's chores <span><a onClick={() => props.clearCompleted('noby')}>(clear all)</a></span></th>
             <th>Points</th>
           </tr>
         </thead>

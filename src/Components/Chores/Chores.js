@@ -11,7 +11,9 @@ class Chores extends Component {
   state = {
     chores: false,
     jackChores: null,
-    nobyChores: null
+    nobyChores: null,
+    jackRequiredChores: null,
+    nobyRequiredChores: null
   }
 
   // this is just for styling purposes so I don't hit the database every time it refreshes
@@ -56,33 +58,64 @@ class Chores extends Component {
         persistent: false
       }
     }
+    const jackRequired = {
+      0: {
+        name: "Clean out your bin",
+        notes: "",
+        completed: true
+      },
+      1: {
+        name: "Laundry",
+        notes: "Make sure it's all folded",
+        completed: false
+      }
+    }
+    // const nobyRequired = {
+    //   0: {
+    //     name: "Clean out your bin",
+    //     notes: "",
+    //     completed: false
+    //   }
+    // }
     this.setState({
       chores: chores,
-      jackChores: jackChores
+      jackChores: jackChores,
+      jackRequiredChores: jackRequired,
+      // nobyRequiredChores: nobyRequired
     })
   }
 
   // After component mounts fetch chores from database
   componentDidMount() {
     // Comment out when accessing database
-    this.setUpDummyData();
+    // this.setUpDummyData();
 
     // Comment out when using dummy data
-    // axios.get(`${secrets.baseURL}/chores.json`)
-    //   .then(response => {
-    //     // console.log('fetched chores on mounting');
-    //     this.setState({ chores: response.data });
-    //   })
-    // axios.get(`${secrets.baseURL}/jackChores.json`)
-    //   .then(response => {
-    //     // console.log('fetched jack chores on mounting');
-    //     this.setState({ jackChores: response.data });
-    //   });
-    // axios.get(`${secrets.baseURL}/nobyChores.json`)
-    //   .then(response => {
-    //     // console.log('fetched noby chores on mounting');
-    //     this.setState({ nobyChores: response.data });
-    //   })
+    axios.get(`${secrets.baseURL}/chores.json`)
+      .then(response => {
+        // console.log('fetched chores on mounting');
+        this.setState({ chores: response.data });
+      })
+    axios.get(`${secrets.baseURL}/jackChores.json`)
+      .then(response => {
+        // console.log('fetched jack chores on mounting');
+        this.setState({ jackChores: response.data });
+      });
+    axios.get(`${secrets.baseURL}/nobyChores.json`)
+      .then(response => {
+        // console.log('fetched noby chores on mounting');
+        this.setState({ nobyChores: response.data });
+      })
+    axios.get(`${secrets.baseURL}/nobyRequiredChores.json`)
+      .then(response => {
+        // console.log('fetched noby chores on mounting');
+        this.setState({ nobyRequiredChores: response.data });
+      })
+    axios.get(`${secrets.baseURL}/jackRequiredChores.json`)
+      .then(response => {
+        // console.log('fetched jack chores on mounting');
+        this.setState({ jackRequiredChores: response.data });
+      })
   }
 
   // Fetch new list of chores after adding a new one
@@ -172,19 +205,41 @@ class Chores extends Component {
       });
   }
 
+  refreshKidChores = (kid) => {
+    axios.get(`${secrets.baseURL}/${kid}RequiredChores.json`)
+      .then(response => {
+        // console.log(`fetched ${kid} chores after deleting`);
+        if (kid === 'jack') this.setState({ jackRequiredChores: response.data });
+        if (kid === 'noby') this.setState({ nobyRequiredChores: response.data });
+      });
+  }
+
+  toggleRequiredChore = (kid, key) => {
+    const chore = kid === 'jack' ? {...this.state.jackRequiredChores[key]} : {...this.state.nobyRequiredChores[key]};
+    chore.completed = chore.completed ? false : true;
+    axios.patch(`${secrets.baseURL}/${kid}RequiredChores/${key}.json`, chore)
+      .then(response => {
+        this.refreshKidChores(kid)});
+  }
+
   render() {
     return (
       <React.Fragment>
-        <NewChore addChore={this.addChoreHandler} />
+        <NewChore 
+          addChore={this.addChoreHandler} 
+          refreshKidChores={this.refreshKidChores} />
         <ChoreList 
           chores={this.state.chores}
           completeChore={this.completeChoreHandler} 
           deleteChore={this.deleteChore} />
         <CompletedChores 
           jack={this.state.jackChores} 
+          jackRequired={this.state.jackRequiredChores}
+          nobyRequired={this.state.nobyRequiredChores}
           noby={this.state.nobyChores}
           putBack={this.putChoreBack}
-          clearCompleted={this.clearCompleted}/>
+          clearCompleted={this.clearCompleted}
+          toggleRequiredChore={this.toggleRequiredChore}/>
       </React.Fragment>
     )
   }

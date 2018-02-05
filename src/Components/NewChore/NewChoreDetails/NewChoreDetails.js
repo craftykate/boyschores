@@ -2,6 +2,24 @@ import React from 'react';
 import './NewChoreDetails.css';
 
 const NewChoreDetails = (props) => {
+  let chooseBoy = null;
+  if (props.required) chooseBoy = (
+    <div className="radio">
+      <input
+        type="radio"
+        name="boy"
+        defaultChecked 
+        onChange={() => {props.setRequiredBoy('both')}} /> Both boys <br />
+      <input
+        type="radio"
+        name="boy"
+        onChange={() => { props.setRequiredBoy('jack') }} /> Just Jack <br />
+      <input
+        type="radio"
+        name="boy"
+        onChange={() => { props.setRequiredBoy('noby') }} /> Just Noby <br />
+    </div>
+  )
   // If user clicks inside "add chore" input field, show the rest of the necessary input fields to add a new chore
   let details = null;
   if (props.show) {
@@ -34,8 +52,14 @@ const NewChoreDetails = (props) => {
             <input
             type="radio"
             name="persistent"
-            onChange={() => props.persistent(true)} /> Multiple allowed
+            onChange={() => props.persistent(true)} /> Multiple allowed <br />
+            ~or~ <br />
+          <input
+            type="radio"
+            name="persistent"
+            onChange={props.setAsRequired} /> Required Chore
         </div>
+        {chooseBoy}
         <button 
           onClick={props.postChore}
           disabled={!props.ready}>

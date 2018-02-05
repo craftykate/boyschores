@@ -1,6 +1,11 @@
 @import '../../styles/_colors.scss';
 
 table {
+  &.choreList {
+    td:first-child {
+      font-weight: bold;
+    }
+  }
   span {
     font-weight: normal;
     font-size: 70%;
@@ -9,6 +14,9 @@ table {
     }
   }
   td {
+    &.todo {
+      font-weight: bold;
+    }
     &.narrow {
       a {
         color: white;

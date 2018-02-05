@@ -33,6 +33,8 @@ class NewChore extends Component {
       notes: '',
       points: 1,
       persistent: false,
+      required: false,
+      requiredBoy: 'both',
       ready: false
     }
   }
@@ -53,23 +55,64 @@ class NewChore extends Component {
     this.setState({ notes: event.target.value })
   }
   persistentHandler = (boolean) => {
-    this.setState({ persistent: boolean })
+    this.setState({ 
+      persistent: boolean,
+      required: false
+    })
   }
+  setAsRequired = () => {
+    this.setState({ required: true })
+  }
+  setRequiredBoy = (kid) => {
+    this.setState({ requiredBoy: kid })
+  }
+
 
   // Save all states for the new chore in an object then post that object to the database and reset the new chore fields
   postChoreHandler = () => {
-    const chore = { 
-      name: this.state.choreName,
-      notes: this.state.notes,
-      points: Number(this.state.points),
-      persistent: this.state.persistent
-    };
-
-    axios.post(`${secrets.baseURL}/chores.json`, chore)
-      .then(response => {
-        // console.log('posted a chore')
-        this.props.addChore();
-      });
+    if (this.state.required) {
+      const chore = {
+        name: this.state.choreName,
+        notes: this.state.notes
+      }
+      if (this.state.requiredBoy === 'both') {
+        axios.post(`${secrets.baseURL}/jackRequiredChores.json`, chore)
+          .then(response => {
+            // console.log('posted a chore')
+            this.props.refreshKidChores('jack');
+          });
+        axios.post(`${secrets.baseURL}/nobyRequiredChores.json`, chore)
+          .then(response => {
+            // console.log('posted a chore')
+            this.props.refreshKidChores('noby');
+          });
+      } else if (this.state.requiredBoy === 'jack') {
+        axios.post(`${secrets.baseURL}/jackRequiredChores.json`, chore)
+          .then(response => {
+            // console.log('posted a chore')
+            this.props.refreshKidChores('jack');
+          });
+      } else if (this.state.requiredBoy === 'noby') {
+        axios.post(`${secrets.baseURL}/nobyRequiredChores.json`, chore)
+          .then(response => {
+            // console.log('posted a chore')
+            this.props.refreshKidChores('noby');
+          });
+      }
+    } else {
+      const chore = { 
+        name: this.state.choreName,
+        notes: this.state.notes,
+        points: Number(this.state.points),
+        persistent: this.state.persistent
+      };
+  
+      axios.post(`${secrets.baseURL}/chores.json`, chore)
+        .then(response => {
+          // console.log('posted a chore')
+          this.props.addChore();
+        });
+    }
     this.setState({ ...this.resetState() });
   }
 
@@ -85,6 +128,9 @@ class NewChore extends Component {
         points={this.state.points}
         pointsChange={this.pointsChangeHandler}
         persistent={this.persistentHandler}
+        setAsRequired={this.setAsRequired}
+        required={this.state.required}
+        setRequiredBoy={this.setRequiredBoy}
         postChore={this.postChoreHandler} 
         cancel={() => this.setState({ ...this.resetState() })} 
         ready={this.state.ready} />

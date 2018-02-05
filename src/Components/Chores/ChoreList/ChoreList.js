@@ -32,7 +32,7 @@ const ChoreList = (props) => {
   }
   
   return (
-    <table>
+    <table className="choreList">
       <thead>
         <tr>
           <th className="choreList">Available Chores:</th>

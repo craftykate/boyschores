@@ -58,6 +58,14 @@ class Chores extends Component {
         persistent: false
       }
     }
+    const nobyChores = {
+      0: {
+        name: "Vacuum living room",
+        notes: "",
+        points: 0.5,
+        persistent: false
+      }
+    }
     const jackRequired = {
       0: {
         name: "Clean out your bin",
@@ -70,18 +78,24 @@ class Chores extends Component {
         completed: false
       }
     }
-    // const nobyRequired = {
-    //   0: {
-    //     name: "Clean out your bin",
-    //     notes: "",
-    //     completed: false
-    //   }
-    // }
+    const nobyRequired = {
+      0: {
+        name: "Clean out your bin",
+        notes: "",
+        completed: false
+      },
+      1: {
+        name: "Clean cat box",
+        notes: "and vacuum stairs",
+        completed: true
+      }
+    }
     this.setState({
       chores: chores,
       jackChores: jackChores,
+      nobyChores: nobyChores,
       jackRequiredChores: jackRequired,
-      // nobyRequiredChores: nobyRequired
+      nobyRequiredChores: nobyRequired
     })
   }
 
@@ -219,7 +233,15 @@ class Chores extends Component {
     chore.completed = chore.completed ? false : true;
     axios.patch(`${secrets.baseURL}/${kid}RequiredChores/${key}.json`, chore)
       .then(response => {
-        this.refreshKidChores(kid)});
+        this.refreshKidChores(kid)
+      });
+  }
+
+  deleteRequired = (kid, key) => {
+    axios.delete(`${secrets.baseURL}/${kid}RequiredChores/${key}.json`)
+      .then(response => {
+        this.refreshKidChores(kid)
+      });
   }
 
   render() {
@@ -238,6 +260,7 @@ class Chores extends Component {
           nobyRequired={this.state.nobyRequiredChores}
           noby={this.state.nobyChores}
           putBack={this.putChoreBack}
+          deleteRequired={this.deleteRequired}
           clearCompleted={this.clearCompleted}
           toggleRequiredChore={this.toggleRequiredChore}/>
       </React.Fragment>

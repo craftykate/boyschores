@@ -6,9 +6,9 @@ const ChoreList = (props) => {
   // If chores is false it hasn't searched for chores on the db yet, so display loading
   // If it's null, it has searched and there aren't chores so display no chores yet
   if (props.chores === false) {
-    chores = <tr><td>loading chores...</td></tr>;
+    chores = <tr><td colSpan="3">loading chores...</td></tr>;
   } else if (props.chores === null) {
-    chores = <tr><td>No chores yet!</td></tr>;
+    chores = <tr><td colSpan="3">No chores yet!</td></tr>;
   }
 
   // If chores have been sent, cycle through them and display a table row for each one
@@ -22,7 +22,7 @@ const ChoreList = (props) => {
         <tr key={key}>
           <td>{chore.name} {mult} {delTag} {note}</td>
           <td className="narrow points">{chore.points}</td>
-          <td className="narrow">
+          <td className="narrow doneColumn">
             <a onClick={() => props.completeChore('jack', key)} className="jack" >J</a>
             <a onClick={() => props.completeChore('noby', key)} className="noby" >N</a>
           </td>

@@ -29,15 +29,15 @@ const CompletedChores = (props) => {
       const chore = props.jackRequired[key];
       const note = chore.notes ? <span className="notes"><br />{chore.notes}</span> : null;
       let doneStyle = 'bold';
-      let doneButton = <a onClick={() => props.toggleRequiredChore('jack', key)}><span role="img" aria-label="Done">✅</span></a>
+      let doneButton = <a onClick={() => props.toggleRequiredChore('jack', key)} className="jack" >J</a>
       if (chore.completed) {
         doneStyle = 'normal';
         doneButton = <a onClick={() => props.toggleRequiredChore('jack', key)}>undo</a>
       }
       return (
         <tr key={key}>
-          <td style={{fontWeight: doneStyle}}>{chore.name} {note}</td>
-          <td>{doneButton}</td>
+          <td style={{ fontWeight: doneStyle }}>{chore.name} <span><a onClick={() => props.deleteRequired('jack', key)}>(x)</a></span> {note}</td>
+          <td className="doneColumn">{doneButton}</td>
         </tr>
       )
     })
@@ -65,15 +65,15 @@ const CompletedChores = (props) => {
       const chore = props.nobyRequired[key];
       const note = chore.notes ? <span className="notes"><br />{chore.notes}</span> : null;
       let doneStyle = 'bold';
-      let doneButton = <a onClick={() => props.toggleRequiredChore('noby', key)}><span role="img" aria-label="Done">✅</span></a>
+      let doneButton = <a onClick={() => props.toggleRequiredChore('noby', key)} className="noby" >N</a>
       if (chore.completed) {
         doneStyle = 'normal';
         doneButton = <a onClick={() => props.toggleRequiredChore('noby', key)}>undo</a>
       }
       return (
         <tr key={key}>
-          <td style={{ fontWeight: doneStyle }}>{chore.name} {note}</td>
-          <td>{doneButton}</td>
+          <td style={{ fontWeight: doneStyle }}>{chore.name} <span><a onClick={() => props.deleteRequired('noby', key)}>(x)</a></span> {note}</td>
+          <td className="doneColumn">{doneButton}</td>
         </tr>
       )
     })
@@ -84,7 +84,7 @@ const CompletedChores = (props) => {
       <table>
         <thead>
           <tr>
-            <th>Jack's chores <span><a onClick={() => props.clearCompleted('jack')}>(clear all)</a></span></th>
+            <th>Jack's chores</th>
             <th>Points / <span role="img" aria-label="Done">✅</span></th>
           </tr>
         </thead>
@@ -92,7 +92,7 @@ const CompletedChores = (props) => {
           {jackRequiredChores}
           {jackChores}
           <tr className="totalRow">
-            <td>total:</td>
+            <td><span><a onClick={() => props.clearCompleted('jack')}>(clear completed)</a></span> total:</td>
             <td>{jackPoints}</td>
           </tr>
         </tbody>
@@ -101,7 +101,7 @@ const CompletedChores = (props) => {
       <table>
         <thead>
           <tr>
-            <th>Noby's chores <span><a onClick={() => props.clearCompleted('noby')}>(clear all)</a></span></th>
+            <th>Noby's chores</th>
             <th>Points / <span role="img" aria-label="Done">✅</span></th>
           </tr>
         </thead>
@@ -109,7 +109,7 @@ const CompletedChores = (props) => {
           {nobyRequiredChores}
           {nobyChores}
           <tr className="totalRow">
-            <td>total:</td>
+            <td><span><a onClick={() => props.clearCompleted('noby')}>(clear completed)</a></span> total:</td>
             <td>{nobyPoints}</td>
           </tr>
         </tbody>

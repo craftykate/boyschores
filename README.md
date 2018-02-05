@@ -3,6 +3,8 @@
 * ~~Be able to delete chores from available list~~
 * ~~Show notes~~
 * ~~Add required chores~~
+* Refactor existing code before moving on
+* Make chore editable 
 * Ability to "start a new day" - erase all their completed chores and undo any completed required chores
 * Input somewhere what the daily goal is so when a boy reaches it their chart turns a different color or something
 * Add authentication - this will come a little later when I publish the site to the interwebs

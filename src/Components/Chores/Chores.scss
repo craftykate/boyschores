@@ -4,6 +4,9 @@ table {
   span {
     font-weight: normal;
     font-size: 70%;
+    &.notes {
+      font-size: 80%;
+    }
   }
   td {
     &.narrow {

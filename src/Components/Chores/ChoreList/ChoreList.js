@@ -15,11 +15,12 @@ const ChoreList = (props) => {
   if (props.chores) {
     chores = Object.keys(props.chores).map(key => {
       const chore = props.chores[key];
-      let mult = chore.persistent ? <span>(multiple)</span> : null;
-      let delTag = <span><a onClick={() => props.deleteChore(key)}>(x)</a></span>;
+      const mult = chore.persistent ? <span>(multiple)</span> : null;
+      const delTag = <span><a onClick={() => props.deleteChore(key)}>(x)</a></span>;
+      const note = chore.notes ? <span className="notes"><br />{chore.notes}</span> : null;
       return (
         <tr key={key}>
-          <td>{chore.name} {mult} {delTag}</td>
+          <td>{chore.name} {mult} {delTag} {note}</td>
           <td className="narrow points">{chore.points}</td>
           <td className="narrow">
             <a onClick={() => props.completeChore('jack', key)} className="jack" >J</a>

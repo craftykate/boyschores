@@ -65,24 +65,24 @@ class Chores extends Component {
   // After component mounts fetch chores from database
   componentDidMount() {
     // Comment out when accessing database
-    // this.setUpDummyData();
+    this.setUpDummyData();
 
     // Comment out when using dummy data
-    axios.get(`${secrets.baseURL}/chores.json`)
-      .then(response => {
-        // console.log('fetched chores on mounting');
-        this.setState({ chores: response.data });
-      })
-    axios.get(`${secrets.baseURL}/jackChores.json`)
-      .then(response => {
-        // console.log('fetched jack chores on mounting');
-        this.setState({ jackChores: response.data });
-      });
-    axios.get(`${secrets.baseURL}/nobyChores.json`)
-      .then(response => {
-        // console.log('fetched noby chores on mounting');
-        this.setState({ nobyChores: response.data });
-      })
+    // axios.get(`${secrets.baseURL}/chores.json`)
+    //   .then(response => {
+    //     // console.log('fetched chores on mounting');
+    //     this.setState({ chores: response.data });
+    //   })
+    // axios.get(`${secrets.baseURL}/jackChores.json`)
+    //   .then(response => {
+    //     // console.log('fetched jack chores on mounting');
+    //     this.setState({ jackChores: response.data });
+    //   });
+    // axios.get(`${secrets.baseURL}/nobyChores.json`)
+    //   .then(response => {
+    //     // console.log('fetched noby chores on mounting');
+    //     this.setState({ nobyChores: response.data });
+    //   })
   }
 
   // Fetch new list of chores after adding a new one

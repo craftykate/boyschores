@@ -51,21 +51,17 @@ const CompletedChores = (props) => {
       })
     }
     if (kid === 'jack') {
-      jackPoints = kidPoints;
+      if (!required) jackPoints = kidPoints;
       return kidChores;
     } else if (kid === 'noby') {
-      nobyPoints = kidPoints;
+      if (!required) nobyPoints = kidPoints;
       return kidChores;
     }
   }
 
-  // Cycle through Jack's completed chores
   jackChores = cycleThroughCompleted('jack', false);
-  // Cycle through Noby's completed chores
   nobyChores = cycleThroughCompleted('noby', false);
-  // Cycle through Jack's required chores
   jackRequiredChores = cycleThroughCompleted('jack', true);
-  // Cycle through Jack's required chores
   nobyRequiredChores = cycleThroughCompleted('noby', true);
 
   return (

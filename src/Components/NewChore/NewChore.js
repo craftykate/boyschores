@@ -79,24 +79,24 @@ class NewChore extends Component {
         axios.post(`${secrets.baseURL}/jackRequiredChores.json`, chore)
           .then(response => {
             // console.log('posted a chore')
-            this.props.refreshKidChores('jack');
+            this.props.fetchKidChores('jack', true);
           });
         axios.post(`${secrets.baseURL}/nobyRequiredChores.json`, chore)
           .then(response => {
             // console.log('posted a chore')
-            this.props.refreshKidChores('noby');
+            this.props.fetchKidChores('noby', true);
           });
       } else if (this.state.requiredBoy === 'jack') {
         axios.post(`${secrets.baseURL}/jackRequiredChores.json`, chore)
           .then(response => {
             // console.log('posted a chore')
-            this.props.refreshKidChores('jack');
+            this.props.fetchKidChores('jack', true);
           });
       } else if (this.state.requiredBoy === 'noby') {
         axios.post(`${secrets.baseURL}/nobyRequiredChores.json`, chore)
           .then(response => {
             // console.log('posted a chore')
-            this.props.refreshKidChores('noby');
+            this.props.fetchKidChores('noby', true);
           });
       }
     } else {
@@ -110,7 +110,7 @@ class NewChore extends Component {
       axios.post(`${secrets.baseURL}/chores.json`, chore)
         .then(response => {
           // console.log('posted a chore')
-          this.props.addChore();
+          this.props.getChores();
         });
     }
     this.setState({ ...this.resetState() });

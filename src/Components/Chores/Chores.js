@@ -21,10 +21,10 @@ class Chores extends Component {
   // After component mounts fetch chores from database
   componentDidMount() {
     // Comment out when accessing database
-    // this.setUpDummyData();
+    this.setUpDummyData();
     
     // Comment out when using dummy data
-    this.fetchChoreData();
+    // this.fetchChoreData();
   }
   
   // this fetches the real data from the database (as opposed to dummy data for styling)
@@ -41,7 +41,7 @@ class Chores extends Component {
     const chores = {
       0: {
         name: "Clean floor of your closet",
-        notes: "",
+        notes: "Hang up all clothes!",
         points: 2,
         persistent: false
       },
@@ -52,7 +52,7 @@ class Chores extends Component {
         persistent: false
       },
       2: {
-        name: "My shower door",
+        name: "Shower door",
         notes: "Get gutter, too",
         points: 2,
         persistent: false
@@ -72,9 +72,9 @@ class Chores extends Component {
     }
     const jackChores = {
       0: {
-        name: "Clean floor of your closet",
-        notes: "Hang everything",
-        points: 2,
+        name: "Vacuum your room",
+        notes: "",
+        points: 1,
         persistent: false
       }
     }

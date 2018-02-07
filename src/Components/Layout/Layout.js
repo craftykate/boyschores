@@ -3,7 +3,7 @@ import Header from '../Header/Header';
 
 const Layout = (props) => (
   <React.Fragment>
-    <Header />
+    <Header user={props.user} logout={props.logout}/>
     <div id="wrapper">
       {props.children}
     </div>

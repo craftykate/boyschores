@@ -27,12 +27,12 @@ const NewChoreDetails = (props) => {
       <React.Fragment>
         <textarea 
           value={props.notes} 
-          onChange={(event) => props.notesChange(event)} 
+          onChange={(event) => props.updateField('notes', event)} 
           placeholder="add optional note"
           className="notes" />
         Points: <select 
           value={props.points} 
-          onChange={(event) => props.pointsChange(event)}
+          onChange={(event) => props.updateField('points', event)}
           className="points">
           <option value='0.25'>1/4</option>
           <option value="0.5">1/2</option>
@@ -75,7 +75,7 @@ const NewChoreDetails = (props) => {
       <input
         value={props.choreName}
         onClick={props.showDetails}
-        onChange={(event) => props.updateChoreName(event)}
+        onChange={(event) => props.updateField('choreName', event)}
         placeholder="Add Chore" 
         className="name"/>
       {details}

@@ -21,10 +21,10 @@ class Chores extends Component {
   // After component mounts fetch chores from database
   componentDidMount() {
     // Comment out when accessing database
-    this.setUpDummyData();
+    // this.setUpDummyData();
     
     // Comment out when using dummy data
-    // this.fetchChoreData();
+    this.fetchChoreData();
   }
   
   // this fetches the real data from the database (as opposed to dummy data for styling)

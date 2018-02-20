@@ -1,4 +1,5 @@
 import React from 'react';
+import Spinner from '../../../UI/Spinner/Spinner';
 
 const ChoreList = (props) => {
   let chores;
@@ -9,7 +10,7 @@ const ChoreList = (props) => {
     chores = <tr><td colSpan="3">Error loading chores! Please refresh or try again later</td></tr>;
   } else {
     if (props.chores === false) {
-      chores = <tr><td colSpan="3">loading chores...</td></tr>;
+      chores = <tr><td colSpan="3"><Spinner /></td></tr>;
     } else if (props.chores === null) {
       chores = <tr><td colSpan="3">No chores yet!</td></tr>;
     }

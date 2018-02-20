@@ -5,10 +5,14 @@ const ChoreList = (props) => {
 
   // If chores is false it hasn't searched for chores on the db yet, so display loading
   // If it's null, it has searched and there aren't chores so display no chores yet
-  if (props.chores === false) {
-    chores = <tr><td colSpan="3">loading chores...</td></tr>;
-  } else if (props.chores === null) {
-    chores = <tr><td colSpan="3">No chores yet!</td></tr>;
+  if (props.error) {
+    chores = <tr><td colSpan="3">Error loading chores! Please refresh or try again later</td></tr>;
+  } else {
+    if (props.chores === false) {
+      chores = <tr><td colSpan="3">loading chores...</td></tr>;
+    } else if (props.chores === null) {
+      chores = <tr><td colSpan="3">No chores yet!</td></tr>;
+    }
   }
 
   // If chores have been sent, cycle through them and display a table row for each one

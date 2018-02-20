@@ -13,7 +13,8 @@ class Chores extends Component {
     jackChores: null,
     nobyChores: null,
     jackRequiredChores: null,
-    nobyRequiredChores: null
+    nobyRequiredChores: null,
+    error: false
   }
 
 
@@ -123,6 +124,9 @@ class Chores extends Component {
   getChores = () => {
     axios.get(`${secrets.baseURL}/chores.json`)
       .then(response => this.setState({ chores: response.data }))
+      .catch(error => {
+        this.setState({error: true})
+      })
   }
 
   // Fetch updated list of kid chores
@@ -196,6 +200,7 @@ class Chores extends Component {
           getChores={this.getChores} 
           fetchKidChores={this.fetchKidChores} />
         <ChoreList 
+          error={this.state.error}
           chores={this.state.chores}
           completeChore={this.completeChoreHandler} 
           deleteChore={this.deleteChore} />

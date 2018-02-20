@@ -36,6 +36,7 @@ All chores and users are stored on Firebase. Right now there's a basic login pro
 * ~~Add required chores~~
 * ~~Refactor existing code before moving on~~
 * ~~Basic authentication~~
+* ~~Order available chores by points~~
 * Make chore editable 
 * Ability to "start a new day" - erase all their completed chores and undo any completed required chores
 * Input somewhere what the daily goal is so when a boy reaches it their chart turns a different color or something

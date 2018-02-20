@@ -13,7 +13,10 @@ const ChoreList = (props) => {
 
   // If chores have been sent, cycle through them and display a table row for each one
   if (props.chores) {
-    chores = Object.keys(props.chores).map(key => {
+    // Go through the points of each chore and store a sorted array of each object's key in an array
+    const sortedChoreKeys = Object.keys(props.chores).sort(function (a, b) { return props.chores[a].points - props.chores[b].points })
+    // Go through each sorted key in order and spit out the relevant object info associated with that key
+    chores = sortedChoreKeys.map(key => {
       const chore = props.chores[key];
       const mult = chore.persistent ? <span>(multiple)</span> : null;
       const delTag = <span><a onClick={() => props.deleteChore(key)}>(x)</a></span>;

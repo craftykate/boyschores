@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './Chores.css';
 import axios from 'axios';
-import secrets from '../../utils/secrets';
 
 import ChoreList from './ChoreList/ChoreList';
 import NewChore from '../NewChore/NewChore';
@@ -122,7 +121,7 @@ class Chores extends Component {
 
   // Fetch updated list of chores
   getChores = () => {
-    axios.get(`${secrets.baseURL}/chores.json`)
+    axios.get(`/chores.json`)
       .then(response => this.setState({ chores: response.data }))
       .catch(error => {
         this.setState({error: true})
@@ -132,7 +131,7 @@ class Chores extends Component {
   // Fetch updated list of kid chores
   fetchKidChores = (kid, required) => {
     const choreLink = required ? `${kid}RequiredChores` : `${kid}Chores`;
-    axios.get(`${secrets.baseURL}/${choreLink}.json`)
+    axios.get(`/${choreLink}.json`)
       .then(response => {
         if (kid === 'jack' && !required) this.setState({ jackChores: response.data });
         if (kid === 'jack' && required) this.setState({ jackRequiredChores: response.data });
@@ -150,32 +149,32 @@ class Chores extends Component {
     }
     // Add that chore to the proper kid's completed chore list and fetch the updated list of their chores
     // Because you're storing all the chore information it makes it really easy to undo this (put the whole thing back in the active chore list) if the chore wasn't done properly
-    axios.post(`${secrets.baseURL}/${kid}Chores.json`, completedChore)
+    axios.post(`/${kid}Chores.json`, completedChore)
       .then(response => this.fetchKidChores(kid, false));
   }
 
   // delete given chore and fetch updated list of chores
   deleteChore = (key) => {
-    axios.delete(`${secrets.baseURL}/chores/${key}.json`)
+    axios.delete(`/chores/${key}.json`)
       .then(response => this.getChores());
   }
 
   // A chore wasn't done right or clicked as done by accident
   // Delete the chore from the proper kid's completed chore list then fetch updated list of their chores
   putChoreBack = (kid, key, chore) => {
-    axios.delete(`${secrets.baseURL}/${kid}Chores/${key}.json`)
+    axios.delete(`/${kid}Chores/${key}.json`)
       .then(response => this.fetchKidChores(kid, false));
     // If the chore is not persistent (if it is a single-time chore) add that chore back to the chores list
     // (If it's chore that can be done mulitple times it will still be on the active chore list)
     if (!chore.persistent) {
-      axios.post(`${secrets.baseURL}/chores.json`, chore)
+      axios.post(`/chores.json`, chore)
         .then(response => this.getChores());
     }
   }
 
   // delete all chores for a given kid
   clearCompleted = (kid) => {
-    axios.delete(`${secrets.baseURL}/${kid}Chores.json`)
+    axios.delete(`/${kid}Chores.json`)
       .then(response => this.fetchKidChores(kid, false));
   }
 
@@ -183,13 +182,13 @@ class Chores extends Component {
   toggleRequiredChore = (kid, key) => {
     const chore = kid === 'jack' ? {...this.state.jackRequiredChores[key]} : {...this.state.nobyRequiredChores[key]};
     chore.completed = chore.completed ? false : true;
-    axios.patch(`${secrets.baseURL}/${kid}RequiredChores/${key}.json`, chore)
+    axios.patch(`/${kid}RequiredChores/${key}.json`, chore)
       .then(response => this.fetchKidChores(kid, true));
   }
 
   // delete a required chore
   deleteRequired = (kid, key) => {
-    axios.delete(`${secrets.baseURL}/${kid}RequiredChores/${key}.json`)
+    axios.delete(`/${kid}RequiredChores/${key}.json`)
       .then(response => this.fetchKidChores(kid, true));
   }
 

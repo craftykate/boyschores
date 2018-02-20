@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import secrets from '../../utils/secrets';
 
 class SignIn extends Component {
   state = {
@@ -10,7 +9,7 @@ class SignIn extends Component {
   }
 
   signIn = () => {
-    axios.get(`${secrets.baseURL}/users.json`)
+    axios.get(`/users.json`)
       .then(users => {
         if (users.data.hasOwnProperty(this.state.username.toLowerCase())) {
           if (users.data[this.state.username] === this.state.pwd) {

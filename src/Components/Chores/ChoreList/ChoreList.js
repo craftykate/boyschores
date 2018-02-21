@@ -1,5 +1,5 @@
 import React from 'react';
-import Spinner from '../../../UI/Spinner/Spinner';
+import Spinner from '../../UI/Spinner/Spinner';
 
 const ChoreList = (props) => {
   let chores;

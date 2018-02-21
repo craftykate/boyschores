@@ -5,6 +5,7 @@ import axios from 'axios';
 import ChoreList from './ChoreList/ChoreList';
 import NewChore from '../NewChore/NewChore';
 import CompletedChores from '../CompletedChores/CompletedChores';
+import withErrorHandler from '../hoc/withErrorHandler/withErrorHandler';
 
 class Chores extends Component {
   state = {
@@ -217,4 +218,4 @@ class Chores extends Component {
   }
 }
 
-export default Chores;
+export default withErrorHandler(Chores, axios);
